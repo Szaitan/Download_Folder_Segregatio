@@ -1,14 +1,15 @@
 import os
+from pathlib import Path
 
-download_folder_direction = f"../../../{os.getlogin()}/Downloads"
+downloads_path = Path.home() / "Downloads"
 
-list_with_files = os.listdir(download_folder_direction)
+list_with_files = os.listdir(downloads_path)
 
 list_with_file_type = []
 list_with_files_to_move = []
 
-for fname in os.listdir(download_folder_direction):
-    path = os.path.join(download_folder_direction, fname)
+for fname in os.listdir(downloads_path):
+    path = os.path.join(downloads_path, fname)
 
     if os.path.isdir(path):
         continue
@@ -17,6 +18,8 @@ for fname in os.listdir(download_folder_direction):
         list_with_file_type.append(split_file[1])
         list_with_files_to_move.append(fname)
 
+print(list_with_file_type)
+print(list_with_files_to_move)
 
 list_with_file_type_no_duplicates = list(dict.fromkeys(list_with_file_type))
 
@@ -40,6 +43,6 @@ for file_ending in list_with_file_type_no_duplicates:
         print(split_file[1])
         if file_ending == split_file[1]:
             print('test')
-            src_path = os.path.join(download_folder_direction, file)
+            src_path = os.path.join(downloads_path, file)
             dst_path = os.path.join(f"../../../{os.getlogin()}/Desktop/Segregated Files/{file_ending}", file)
             os.rename(src_path, dst_path)
